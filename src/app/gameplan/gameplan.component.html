@@ -1,0 +1,24 @@
+<h1 class="MainHead">{{pairingSection.description}}</h1>
+<div class="container mainContentContainer">
+
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped data-table">
+                <tr>
+                    <th class="Time">Zeit</th>
+                    <th class="Court">Platz</th>
+                    <th class="Round">Runde</th>
+                    <th class="C1">Team 1</th>
+                    <th class="C2">Team 2</th>
+                </tr>
+                <tr *ngFor="let pairing of pairingSection.pairings">
+                    <td class="Time">{{pairing.FormattedTime}}</td>
+                    <td class="Court">{{pairing.Court}}</td>
+                    <td class="Round">{{pairing.RoundInfo}}</td>
+                    <td class="C1">{{pairing.Comp1Name}}</td>
+                    <td class="C2">{{pairing.Comp2Name}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
