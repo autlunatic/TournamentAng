@@ -17,6 +17,7 @@ import { TournamentService } from './services/tournament.service';
 import { CompetitorPageComponent } from './competitor-page/competitor-page.component';
 import { GroupComponent } from './groups/group.component';
 import { GameplansComponent } from './gameplan/gameplans.component';
+import { InputResultComponent } from './input-result/input-result.component';
 
 
 
@@ -32,7 +33,8 @@ import { GameplansComponent } from './gameplan/gameplans.component';
     InputCompetitorsComponent,
     CompetitorPageComponent,
     GroupComponent,
-    GameplansComponent
+    GameplansComponent,
+    InputResultComponent
   ],
   imports: [
     BrowserModule,

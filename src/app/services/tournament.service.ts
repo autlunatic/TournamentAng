@@ -3,10 +3,24 @@ import { pairingInfo, pairingSection, GroupInfo, competitor, resultInfo } from '
 
 @Injectable()
 export class TournamentService {
-  getResultInfos(filter: string): resultInfo[] {
-    let res = [
+  saveResult(arg0: any): any {
+    throw new Error("Method not implemented.");
+  }
+  delteFinalRound(): any {
+    throw new Error("Method not implemented.");
+  }
+  buildTournament(): any {
+    throw new Error("Method not implemented.");
+  }
+  calcFinals(): any {
+    throw new Error("Method not implemented.");
+  }
+  saveDetails(): any {
+    throw new Error("Method not implemented.");
+  }
+  resultInfos : resultInfo[]=[
       {
-        PairingID: 1,
+        PairingID: 0,
         PairingInfo: "0",
         Comp1Name: "Hans",
         Comp2Name: "Wurst",
@@ -28,7 +42,7 @@ export class TournamentService {
         Done: true
       },
       {
-        PairingID: 1,
+        PairingID: 2,
         PairingInfo: "2",
         Comp1Name: "Hans",
         Comp2Name: "Benni",
@@ -39,7 +53,13 @@ export class TournamentService {
         Done: true
       }
     ]
-    res = res.filter(
+
+
+  getResultInfo(filterID: number): resultInfo {
+    return this.resultInfos.find(element => element.PairingID ==filterID)
+  }
+  getResultInfos(filter: string): resultInfo[] {
+    let res = this.resultInfos.filter(
       result =>
         filter == "" ||
         !filter ||
@@ -75,8 +95,8 @@ export class TournamentService {
     return [
       {
         ID: 1, CInfo: [{ Name: "Hans", GamePoints: 2, TeamPoints: 5 },
-        { Name: "Hugo", GamePoints: 9, TeamPoints: 4 },
-        { Name: "binidubist", GamePoints: 2, TeamPoints: 3 }]
+        { Name: "Benni", GamePoints: 9, TeamPoints: 4 },
+        { Name: "Dani", GamePoints: 2, TeamPoints: 3 }]
       },
       {
         ID: 2, CInfo: [{ Name: "asdf", GamePoints: 2, TeamPoints: 5 },
@@ -89,8 +109,8 @@ export class TournamentService {
   getGroupForCompetitor(arg0: any): any {
     return {
       ID: 1, CInfo: [{ Name: "Hans", GamePoints: 2, TeamPoints: 5 },
-      { Name: "Hugo", GamePoints: 9, TeamPoints: 4 },
-      { Name: "binidubist", GamePoints: 2, TeamPoints: 3 }]
+      { Name: "Benni", GamePoints: 9, TeamPoints: 4 },
+      { Name: "Dani", GamePoints: 2, TeamPoints: 3 }]
     }
   }
 
@@ -105,21 +125,21 @@ export class TournamentService {
     {
       FormattedTime: "12:00",
       Court: "Platz 1",
-      RoundInfo: "Runde 1",
+      RoundInfo: "Runde 2",
       Comp1Name: "Hans",
-      Comp2Name: "wurst"
+      Comp2Name: "Benni"
     }, {
       FormattedTime: "12:00",
       Court: "Platz 1",
-      RoundInfo: "Runde 1",
-      Comp1Name: "wurst",
+      RoundInfo: "Runde 3",
+      Comp1Name: "Dani",
       Comp2Name: "Hans"
     }, {
       FormattedTime: "12:00",
-      Court: "Platz 1",
+      Court: "Platz 4",
       RoundInfo: "Runde 1",
-      Comp1Name: "Hans",
-      Comp2Name: "wurst"
+      Comp1Name: "Dani",
+      Comp2Name: "Benni"
     }]
 
   pairingSection: pairingSection = {
@@ -165,7 +185,7 @@ export class TournamentService {
         "Id": 0,
         "TeamName": "Benni",
         "GroupPoints": 1,
-        "GamePoints": 0,
+        "points": 0,
         "DrawNr": 0,
         "GroupPlace": 0
       },

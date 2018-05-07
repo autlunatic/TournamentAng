@@ -1,0 +1,20 @@
+<h1 class="MainHead">Ergebnisse eintragen</h1>
+<div class="container mainContentContainer">
+    <form method="POST">
+        <div class="form-group">
+            <h2 *ngIf="simpleInputFields.IDInfo">Spielnummer: {{simpleInputFields.IDInfo}}</h2>
+            <h3>Runde: {{simpleInputFields.RoundInfo}}</h3>
+            <label for="competitorPoints1">{{simpleInputFields.Competitor1Name}}</label>
+            <input type="number" class="form-control" id="competitor1Points" name="competitor1Points" [(ngModel)]="simpleInputFields.Competitor1Points" autofocus>
+
+            <label for="competitor2">{{simpleInputFields.Competitor2Name}}</label>
+            <input type="number" class="form-control" id="competitor2Points" name="competitor2Points" [(ngModel)] = "simpleInputFields.Competitor2Points"> 
+            <br/>
+            <div *ngIf="errHTML" class="alert alert-danger">
+                <strong>{{errHTML}}</strong>
+            </div>
+            <input (click) = "onSaveInput()" type="submit" class="btn btn-default btnBottom" value="OK">
+
+        </div>
+    </form>
+</div>

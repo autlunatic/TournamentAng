@@ -15,7 +15,7 @@
 
                 <tr *ngFor="let result of results">
                     <td class="Time">
-                        <a href="/inputResults/{{result.PairingID}}">{{result.PairingInfo}}</a>
+                        <a  routerLink="/inputResults/{{result.PairingID}}">{{result.PairingInfo}}</a>
                     </td>
                     <td class="Court">{{result.Comp1Name}}</td>
                     <td class="Round">{{result.Comp2Name}}</td>

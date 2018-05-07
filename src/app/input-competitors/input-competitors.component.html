@@ -28,6 +28,6 @@
 <h1 class="MainHead">Liste der Teams</h1>
 <div class="container">
     <div class="d-flex flex-row flex-wrap">
-        <a *ngFor="let competitor of competitors" href="competitor/{{competitor.name}}" class="card p-2 px-3 w-50 list-group-item-action">{{competitor.name}}</a>
+        <a *ngFor="let competitor of competitors" routerLink="/competitor/{{competitor.name}}" class="card p-2 px-3 w-50 list-group-item-action">{{competitor.name}}</a>
     </div>
 </div>

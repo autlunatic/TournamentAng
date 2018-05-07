@@ -9,6 +9,7 @@ import { ResultsComponent } from '../results/results.component';
 import { InputCompetitorsComponent } from '../input-competitors/input-competitors.component';
 import { CompetitorPageComponent } from '../competitor-page/competitor-page.component';
 import { GameplansComponent } from '../gameplan/gameplans.component';
+import { InputResultComponent } from '../input-result/input-result.component';
 
 
 
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: "groups", component: GroupsComponent },
   { path: "inputCompetitors", component: InputCompetitorsComponent },
   { path: "adminPage", component: AdminPageComponent },
+  { path: "inputResults/:ID", component: InputResultComponent },
   { path: "competitor/:name", component: CompetitorPageComponent },
   { path: "**", component: MainPageComponent },
 

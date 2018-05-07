@@ -64,10 +64,10 @@
         </div>
 
       <div class="form-group row">
-        <input type="submit" class="btn btn-default btn-block" name="OK" value="OK">
-        <input type="submit" class="btn btn-default btn-block" name="calcFinals" value="Finalrunden berechnen">
-        <input type="submit" class="btn btn-default btn-block" name="build" value="Build Tournament">
-        <input type="submit" class="btn btn-default btn-block" name="deleteFinals" value="Finalrunden löschen">
+        <input (click) = "onSave()" type="submit" class="btn btn-default btn-block" name="btnsave" value="Speichern">
+        <input (click) = "onCalcFinals()" type="submit" class="btn btn-default btn-block" name="calcFinals" value="Finalrunden berechnen">
+        <input (click) = "onBuildTournament()" type="submit" class="btn btn-default btn-block" name="build" value="Build Tournament">
+        <input (click) = "onDeleteFinalRound()" type="submit" class="btn btn-default btn-block" name="deleteFinals" value="Finalrunden löschen">
       </div>
     </form>
   </div>

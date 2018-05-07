@@ -18,6 +18,5 @@ export class GameplanComponent implements OnInit {
   constructor(private tService: TournamentService) { }
 
   ngOnInit() {
-    console.log(this.filterCompetitor == "")
   }
 }

@@ -27,4 +27,19 @@ export class AdminPageComponent implements OnInit {
     this.details = this.tournamenService.tournament.Details
   }
 
+  onSave() {
+    this.tournamenService.saveDetails()
+  }
+  onCalcFinals() {
+    this.tournamenService.calcFinals()
+  }
+
+  onBuildTournament() {
+    this.tournamenService.buildTournament()
+  }
+
+  onDeleteFinalRound() {
+    this.tournamenService.delteFinalRound()
+  }
+
 }
