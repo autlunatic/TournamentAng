@@ -2,16 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Time } from '@angular/common';
 import { TournamentService } from '../services/tournament.service';
 
-
-class details {
-  "NumberOfParallelGames": number
-  "MinutesPerGame": number
-  "MinutesAvailForGroupsPhase": number
-  "FinalistCount": number
-  "TournamentStartTime": string
-  "FinalsStartTime": string
+class Details {
+  NumberOfParallelGames: number;
+  MinutesPerGame: number;
+  MinutesAvailForGroupsPhase: number;
+  FinalistCount: number;
+  TournamentStartTime: string;
+  FinalsStartTime: string;
 }
-
 
 @Component({
   selector: 'app-admin-page',
@@ -19,27 +17,26 @@ class details {
   styleUrls: ['./admin-page.component.css']
 })
 export class AdminPageComponent implements OnInit {
-  details: details
+  details: Details;
 
-  constructor(private tournamenService: TournamentService) { }
+  constructor(private tournamenService: TournamentService) {}
 
   ngOnInit() {
-    this.details = this.tournamenService.tournament.Details
+    this.details = this.tournamenService.tournament.Details;
   }
 
   onSave() {
-    this.tournamenService.saveDetails()
+    this.tournamenService.saveDetails();
   }
   onCalcFinals() {
-    this.tournamenService.calcFinals()
+    this.tournamenService.calcFinals();
   }
 
   onBuildTournament() {
-    this.tournamenService.buildTournament()
+    this.tournamenService.buildTournament();
   }
 
   onDeleteFinalRound() {
-    this.tournamenService.delteFinalRound()
+    this.tournamenService.deleteFinalRound();
   }
-
 }
