@@ -7,7 +7,7 @@ import {
   ResultInfo,
   ResultInfos
 } from '../models/tournament.models';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 
@@ -581,8 +581,10 @@ export class TournamentService {
       ]
     };
   }
-  saveResult(arg0: any): any {
-    throw new Error('Method not implemented.');
+  saveResult(result: ResultInfo): any {
+    console.log(result);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.post('http://localhost:5050/saveResults', JSON.stringify(result), { headers: headers });
   }
   deleteFinalRound(): any {
     throw new Error('Method not implemented.');
@@ -618,22 +620,32 @@ export class TournamentService {
     };
     return ps;
   }
-  getResultInfo(filterID: number): ResultInfo {
-    return this.resultInfos.find(element => element.PairingID === filterID);
-  }
-  getResultInfos(filter: string): Observable<ResultInfos> {
+  getResultInfo(filterID: number): Observable<ResultInfo> {
     return this.http.get('http://localhost:5050/results').map((resp: Response) => {
+      console.log(resp);
       const resInfos: ResultInfos = resp.json();
-      console.log(resInfos);
-      const res = resInfos.ResultInfos.filter(
-        result =>
-          filter === '' ||
-          !filter ||
-          result.Comp1Name.toUpperCase() === filter.toUpperCase() ||
-          result.Comp2Name.toUpperCase() === filter.toUpperCase()
-      );
-      resInfos.ResultInfos = res;
+      return resInfos.ResultInfos.find(element => element.PairingID === filterID);
+    });
+  }
 
+  getResultInfos(filter: string): Observable<ResultInfos[]> {
+    return this.http.get('http://localhost:5050/results').map((resp: Response) => {
+      console.log(resp);
+      const resInfos: ResultInfos[] = resp.json();
+      console.log(resInfos);
+      resInfos.forEach(element => {
+        console.log('element', element);
+        console.log('description:', element.Description);
+        console.log('Resultinfos', element.ResultInfos);
+        const res = element.ResultInfos.filter(
+          result =>
+            filter === '' ||
+            !filter ||
+            result.Comp1Name.toUpperCase() === filter.toUpperCase() ||
+            result.Comp2Name.toUpperCase() === filter.toUpperCase()
+        );
+        element.ResultInfos = res;
+      });
       return resInfos;
     });
   }

@@ -27,6 +27,7 @@ export class Competitor {
   ID: number;
   name: string;
 }
+
 export class ResultInfos {
   Description: string;
   ResultInfos: ResultInfo[];

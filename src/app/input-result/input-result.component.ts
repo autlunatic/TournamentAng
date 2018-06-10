@@ -33,18 +33,26 @@ export class InputResultComponent implements OnInit {
   constructor(private tournamentService: TournamentService, private actRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    const res = this.tournamentService.getResultInfo(this.actRoute.snapshot.params['ID']);
-    console.log(res);
-    if (res) {
-      this.simpleInputFields.Competitor1Name = res.Comp1Name;
-      this.simpleInputFields.Competitor1Points = res.Pairing1Pts;
-      this.simpleInputFields.Competitor2Name = res.Comp2Name;
-      this.simpleInputFields.Competitor2Points = res.Pairing2Pts;
-      this.simpleInputFields.IDInfo = res.PairingID.toString();
-      this.simpleInputFields.RoundInfo = res.PairingInfo;
-    }
+    this.tournamentService.getResultInfo(+this.actRoute.snapshot.params['ID']).subscribe((res: ResultInfo) => {
+      console.log(res);
+      if (res) {
+        this.simpleInputFields.Competitor1Name = res.Comp1Name;
+        this.simpleInputFields.Competitor1Points = res.Pairing1Pts;
+        this.simpleInputFields.Competitor2Name = res.Comp2Name;
+        this.simpleInputFields.Competitor2Points = res.Pairing2Pts;
+        this.simpleInputFields.IDInfo = res.PairingID.toString();
+        this.simpleInputFields.RoundInfo = res.PairingInfo;
+      }
+      this.result = res;
+    });
   }
   onSaveInput() {
-    this.tournamentService.saveResult(this.result);
+    this.result.Pairing1Pts = this.simpleInputFields.Competitor1Points;
+    this.result.Pairing2Pts = this.simpleInputFields.Competitor2Points;
+
+    console.log(this.result);
+    this.tournamentService
+      .saveResult(this.result)
+      .subscribe(response => console.log(response), error => console.log(error));
   }
 }

@@ -9,14 +9,14 @@ import { ResultInfo, ResultInfos } from '../models/tournament.models';
 })
 export class ResultsComponent implements OnInit, OnChanges {
   @Input() filterCompetitor = '';
-  results: ResultInfo[] = [];
+  resultInfos: ResultInfos[] = [];
 
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit() {
     console.log(this.filterCompetitor);
-    this.tournamentService.getResultInfos(this.filterCompetitor).subscribe((data: ResultInfos) => {
-      this.results = data.ResultInfos;
+    this.tournamentService.getResultInfos(this.filterCompetitor).subscribe((data: ResultInfos[]) => {
+      this.resultInfos = data;
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
