@@ -1,20 +1,20 @@
-<div class="container mainContentContainer">
-    <h3 class="GroupHeader">Gruppe {{grp.ID}}</h3>
-    <div class="row ">
+<div *ngIf='grp' class="container mainContentContainer">
+  <h3 class="GroupHeader">Gruppe {{grp.ID}}</h3>
+  <div class="row ">
     <div class="table-responsive">
-        <table class="table table-striped">
-            <th width="80%">Name </th>
-            <th> Spielpunkte</th>
-            <th> Teampunkte</th>
-            <tr *ngFor="let team of grp.CInfo">
-                <td class="clickableGroup">
-                    <a class="clickableGroup" routerLink="/competitor/{{team.Name}}">{{team.Name}}</a>
-                </td>
-                <td>{{team.GamePoints}}</td>
-                <td>{{team.TeamPoints}}</td>
-            </tr>
-        </table>
+      <table class="table table-striped">
+        <th width="80%">Name </th>
+        <th> Spielpunkte</th>
+        <th> Teampunkte</th>
+        <tr *ngFor="let team of grp.CInfo">
+          <td class="clickableGroup">
+            <a class="clickableGroup" routerLink="/competitor/{{team.Name}}">{{team.Name}}</a>
+          </td>
+          <td>{{team.GamePoints}}</td>
+          <td>{{team.TeamPoints}}</td>
+        </tr>
+      </table>
     </div>
-    </div>
+  </div>
 
 </div>

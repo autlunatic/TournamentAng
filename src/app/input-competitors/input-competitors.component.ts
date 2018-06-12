@@ -17,11 +17,13 @@ export class InputCompetitorsComponent implements OnInit {
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit() {
-    this.competitors = this.tournamentService.getCompetitors();
+    this.tournamentService.getCompetitors().subscribe(data => {
+      this.competitors = data;
+    });
   }
 
   onAddTeam() {
-    var upperNames = this.competitors.map(function(value) {
+    const upperNames = this.competitors.map(function(value) {
       return value.name.toUpperCase().trim();
     });
     if (upperNames.includes(this.inputName.toUpperCase().trim())) {
@@ -31,7 +33,6 @@ export class InputCompetitorsComponent implements OnInit {
 
     this.ErrHTML = '';
     this.tournamentService.addCompetitor(this.inputName);
-    this.competitors = this.tournamentService.getCompetitors();
 
     this.inputName = '';
     this.inputBox.nativeElement.focus();

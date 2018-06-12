@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -33,8 +33,8 @@ import { InputResultComponent } from './input-result/input-result.component';
     GameplansComponent,
     InputResultComponent
   ],
-  imports: [BrowserModule, FormsModule, RoutingModule, HttpModule],
-  providers: [BrowserModule, HttpModule, FormsModule, RoutingModule, TournamentService],
+  imports: [BrowserModule, FormsModule, RoutingModule, HttpClientModule],
+  providers: [BrowserModule, HttpClientModule, FormsModule, RoutingModule, TournamentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

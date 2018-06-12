@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { PairingSection } from '../models/tournament.models';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gameplans',
@@ -16,9 +16,7 @@ export class GameplansComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sectSub = this.tournamentService.getPairingSections().subscribe((sections: PairingSection[]) => {
-      console.log(sections);
       this.pairingSections = sections;
-      console.log(this.pairingSections);
     });
   }
   ngOnDestroy() {

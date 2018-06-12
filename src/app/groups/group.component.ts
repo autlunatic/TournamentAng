@@ -7,12 +7,9 @@ import { GroupInfo } from '../models/tournament.models';
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
+  @Input() grp: GroupInfo;
 
-  @Input() grp:GroupInfo
-  
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

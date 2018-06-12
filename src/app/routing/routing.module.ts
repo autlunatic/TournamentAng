@@ -11,28 +11,20 @@ import { CompetitorPageComponent } from '../competitor-page/competitor-page.comp
 import { GameplansComponent } from '../gameplan/gameplans.component';
 import { InputResultComponent } from '../input-result/input-result.component';
 
-
-
 const routes: Routes = [
-  { path: "", component: MainPageComponent },
-  { path: "gameplan", component: GameplansComponent },
-  { path: "results", component: ResultsComponent },
-  { path: "groups", component: GroupsComponent },
-  { path: "inputCompetitors", component: InputCompetitorsComponent },
-  { path: "adminPage", component: AdminPageComponent },
-  { path: "inputResults/:ID", component: InputResultComponent },
-  { path: "competitor/:name", component: CompetitorPageComponent },
-  { path: "**", component: MainPageComponent },
-
-]
+  { path: '', component: MainPageComponent },
+  { path: 'gameplan', component: GameplansComponent },
+  { path: 'results', component: ResultsComponent },
+  { path: 'groups', component: GroupsComponent },
+  { path: 'inputCompetitors', component: InputCompetitorsComponent },
+  { path: 'adminPage', component: AdminPageComponent },
+  { path: 'inputResults/:ID', component: InputResultComponent },
+  { path: 'competitor/:name', component: CompetitorPageComponent },
+  { path: '**', component: MainPageComponent }
+];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [CommonModule, RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class RoutingModule { }
+export class RoutingModule {}

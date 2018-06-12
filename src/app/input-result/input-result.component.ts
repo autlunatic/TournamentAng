@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { ResultInfo } from '../models/tournament.models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 class SimpleInputFields {
   IDInfo: string;
@@ -17,7 +17,7 @@ class SimpleInputFields {
   templateUrl: './input-result.component.html',
   styleUrls: ['./input-result.component.css']
 })
-export class InputResultComponent implements OnInit {
+export class InputResultComponent implements OnInit, AfterViewInit {
   errHTML = '';
   simpleInputFields: SimpleInputFields = {
     IDInfo: '',
@@ -29,12 +29,17 @@ export class InputResultComponent implements OnInit {
   };
   @Input() ResultID = 0;
   result: ResultInfo;
+  @ViewChild('competitor1Points') input1: ElementRef;
 
-  constructor(private tournamentService: TournamentService, private actRoute: ActivatedRoute) {}
+  constructor(
+    private tournamentService: TournamentService,
+    private actRoute: ActivatedRoute,
+    private router: Router,
+    private renderer: Renderer
+  ) {}
 
   ngOnInit() {
-    this.tournamentService.getResultInfo(+this.actRoute.snapshot.params['ID']).subscribe((res: ResultInfo) => {
-      console.log(res);
+    this.tournamentService.getResultInfo(+this.actRoute.snapshot.params['ID']).then((res: ResultInfo) => {
       if (res) {
         this.simpleInputFields.Competitor1Name = res.Comp1Name;
         this.simpleInputFields.Competitor1Points = res.Pairing1Pts;
@@ -50,9 +55,14 @@ export class InputResultComponent implements OnInit {
     this.result.Pairing1Pts = this.simpleInputFields.Competitor1Points;
     this.result.Pairing2Pts = this.simpleInputFields.Competitor2Points;
 
-    console.log(this.result);
     this.tournamentService
       .saveResult(this.result)
-      .subscribe(response => console.log(response), error => console.log(error));
+      .subscribe(response => this.router.navigate(['/results']), error => console.log('error', error));
+  }
+  ngAfterViewInit(): void {
+    this.renderer.invokeElementMethod(this.input1.nativeElement, 'focus');
+    setTimeout(() => {
+      this.renderer.invokeElementMethod(this.input1.nativeElement, 'select');
+    }, 100);
   }
 }

@@ -8,16 +8,17 @@ import { ResultInfo, ResultInfos } from '../models/tournament.models';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnInit, OnChanges {
-  @Input() filterCompetitor = '';
-  resultInfos: ResultInfos[] = [];
+  @Input() resultInfos: ResultInfos[] = [];
+  @Input() isForCompetitor: boolean;
 
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit() {
-    console.log(this.filterCompetitor);
-    this.tournamentService.getResultInfos(this.filterCompetitor).subscribe((data: ResultInfos[]) => {
-      this.resultInfos = data;
-    });
+    if (!this.isForCompetitor && (!this.resultInfos || this.resultInfos.length === 0)) {
+      this.tournamentService.getResultInfos('').subscribe((data: ResultInfos[]) => {
+        this.resultInfos = data;
+      });
+    }
   }
   ngOnChanges(changes: SimpleChanges): void {
     // this.results = this.tournamentService.getResultInfos(this.filterCompetitor);

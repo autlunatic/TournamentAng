@@ -7,90 +7,15 @@ import {
   ResultInfo,
   ResultInfos
 } from '../models/tournament.models';
-import { Http, Response, Headers } from '@angular/http';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
+import { Response, Headers } from '@angular/http';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { componentFactoryName } from '@angular/compiler';
 
 @Injectable()
 export class TournamentService {
-  resultInfos: ResultInfo[] = [
-    {
-      PairingID: 0,
-      PairingInfo: '0',
-      Comp1Name: 'Hans',
-      Comp2Name: 'Wurst',
-      Pairing1Pts: 0,
-      Pairing2Pts: 1,
-      Group1Pts: 1,
-      Group2Pts: 2,
-      Done: true
-    },
-    {
-      PairingID: 1,
-      PairingInfo: '1',
-      Comp1Name: 'Benni',
-      Comp2Name: 'Dani',
-      Pairing1Pts: 0,
-      Pairing2Pts: 1,
-      Group1Pts: 1,
-      Group2Pts: 2,
-      Done: true
-    },
-    {
-      PairingID: 2,
-      PairingInfo: '2',
-      Comp1Name: 'Hans',
-      Comp2Name: 'Benni',
-      Pairing1Pts: 0,
-      Pairing2Pts: 1,
-      Group1Pts: 1,
-      Group2Pts: 2,
-      Done: true
-    }
-  ];
-
   competitors: Competitor[] = [{ ID: 1, name: 'benni' }, { ID: 2, name: 'dani' }, { ID: 3, name: 'Zoé' }];
-
-  demopairings: PairingInfo[] = [
-    {
-      FormattedTime: '12:00',
-      Court: 'Platz 1',
-      RoundInfo: 'Runde 1',
-      Comp1Name: 'HansdieKrasse Wurst',
-      Comp2Name: 'wurstistKralleralsHAnsalleszusammen'
-    },
-    {
-      FormattedTime: '12:00',
-      Court: 'Platz 1',
-      RoundInfo: 'Runde 2',
-      Comp1Name: 'Hans',
-      Comp2Name: 'Benni'
-    },
-    {
-      FormattedTime: '12:00',
-      Court: 'Platz 1',
-      RoundInfo: 'Runde 3',
-      Comp1Name: 'Dani',
-      Comp2Name: 'Hans'
-    },
-    {
-      FormattedTime: '12:00',
-      Court: 'Platz 4',
-      RoundInfo: 'Runde 1',
-      Comp1Name: 'Dani',
-      Comp2Name: 'Benni'
-    }
-  ];
-
-  pairingSection: PairingSection = {
-    Description: 'Spielplan',
-    Pairings: this.demopairings
-  };
-
-  pairingSectionFinals: PairingSection = {
-    Description: 'Finalrunden',
-    Pairings: this.demopairings
-  };
 
   tournament = {
     ID: 0,
@@ -533,8 +458,11 @@ export class TournamentService {
     PointCalcer: {}
   };
 
+  filterCompName: string;
   pairingSections: PairingSection[] = [];
-  constructor(private http: Http) {}
+
+  constructor(private http: HttpClient) {}
+
   addCompetitor(comp: string) {
     const c: Competitor = { ID: this.getNextCompetitorID(), name: comp };
     this.competitors.push(c);
@@ -548,44 +476,51 @@ export class TournamentService {
     return max++;
   }
 
-  getCompetitors(): Competitor[] {
-    return this.competitors;
+  getCompetitors(): Observable<Competitor[]> {
+    return this.http.get<Competitor[]>('http://localhost:5050/competitors');
   }
-  getGroups(): GroupInfo[] {
-    return [
-      {
-        ID: 1,
-        CInfo: [
-          { Name: 'Hans', GamePoints: 2, TeamPoints: 5 },
-          { Name: 'Benni', GamePoints: 9, TeamPoints: 4 },
-          { Name: 'Dani', GamePoints: 2, TeamPoints: 3 }
-        ]
-      },
-      {
-        ID: 2,
-        CInfo: [
-          { Name: 'asdf', GamePoints: 2, TeamPoints: 5 },
-          { Name: 'jklö', GamePoints: 9, TeamPoints: 4 },
-          { Name: 'oh yeah', GamePoints: 2, TeamPoints: 3 }
-        ]
+
+  getGroups(): Observable<GroupInfo[]> {
+    return this.http.get<GroupInfo[]>('http://localhost:5050/groups');
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError('Something bad happened; please try again later.');
+  }
+
+  filterGroupInfoForCompetitor(value, index, ar) {
+    value.CInfo.forEach(element => {
+      if (element.Name === this.filterCompName) {
+        return true;
       }
-    ];
+    });
+    return false;
   }
-  getGroupForCompetitor(arg0: any): any {
-    return {
-      ID: 1,
-      CInfo: [
-        { Name: 'Hans', GamePoints: 2, TeamPoints: 5 },
-        { Name: 'Benni', GamePoints: 9, TeamPoints: 4 },
-        { Name: 'Dani', GamePoints: 2, TeamPoints: 3 }
-      ]
-    };
+
+  getGroupForCompetitor(compName: string): Observable<GroupInfo[]> {
+    this.filterCompName = compName;
+    return this.getGroups().pipe(map((data: GroupInfo[]) => data.filter(this.filterGroupInfoForCompetitor)));
   }
+
   saveResult(result: ResultInfo): any {
-    console.log(result);
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.post('http://localhost:5050/saveResults', JSON.stringify(result), { headers: headers });
+    const header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      responseType: 'text'
+    });
+    return this.http
+      .post<ResultInfo>('http://localhost:5050/saveResults', result, { headers: header })
+      .pipe(catchError(this.handleError));
   }
+
   deleteFinalRound(): any {
     throw new Error('Method not implemented.');
   }
@@ -599,54 +534,35 @@ export class TournamentService {
     throw new Error('Method not implemented.');
   }
   getPairingSections() {
-    // return [this.pairingSection, this.pairingSectionFinals];
-    return this.http.get('http://localhost:5050/gamePlan').map((resp: Response) => {
-      const sections: PairingSection[] = resp.json();
-      return sections;
-    });
+    return this.http.get<PairingSection[]>('http://localhost:5050/gamePlan');
   }
 
-  getPairingSectionForCompetitor(competitorName: string): PairingSection {
-    // return this.pairingSection
-    const ps: PairingSection = {
-      Description: this.pairingSection.Description,
-      Pairings: this.pairingSection.Pairings.filter(
-        pairing =>
-          !competitorName ||
-          competitorName === '' ||
-          pairing.Comp1Name.toUpperCase() === competitorName.toUpperCase() ||
-          pairing.Comp2Name.toUpperCase() === competitorName.toUpperCase()
-      )
-    };
-    return ps;
-  }
-  getResultInfo(filterID: number): Observable<ResultInfo> {
-    return this.http.get('http://localhost:5050/results').map((resp: Response) => {
-      console.log(resp);
-      const resInfos: ResultInfos = resp.json();
-      return resInfos.ResultInfos.find(element => element.PairingID === filterID);
+  getResultInfo(filterID: number): Promise<ResultInfo> {
+    return new Promise<ResultInfo>(resolve => {
+      this.getResultInfos('').subscribe((resInfosArray: ResultInfos[]) => {
+        resInfosArray.forEach(resInfo => {
+          resolve(resInfo.ResultInfos.find(element => element.PairingID === filterID));
+          //     // resInfo.ResultInfos = resInfo.ResultInfos.find(element => element.PairingID === filterID);
+        });
+      });
     });
   }
 
   getResultInfos(filter: string): Observable<ResultInfos[]> {
-    return this.http.get('http://localhost:5050/results').map((resp: Response) => {
-      console.log(resp);
-      const resInfos: ResultInfos[] = resp.json();
-      console.log(resInfos);
-      resInfos.forEach(element => {
-        console.log('element', element);
-        console.log('description:', element.Description);
-        console.log('Resultinfos', element.ResultInfos);
-        const res = element.ResultInfos.filter(
-          result =>
-            filter === '' ||
-            !filter ||
-            result.Comp1Name.toUpperCase() === filter.toUpperCase() ||
-            result.Comp2Name.toUpperCase() === filter.toUpperCase()
-        );
-        element.ResultInfos = res;
-      });
-      return resInfos;
-    });
+    return this.http.get<ResultInfos[]>('http://localhost:5050/results').pipe(
+      map((resp: ResultInfos[]) => {
+        resp.forEach(element => {
+          const res = element.ResultInfos.filter(
+            result =>
+              filter === '' ||
+              !filter ||
+              result.Comp1Name.toUpperCase() === filter.toUpperCase() ||
+              result.Comp2Name.toUpperCase() === filter.toUpperCase()
+          );
+          element.ResultInfos = res;
+        });
+        return resp;
+      })
+    );
   }
 }
