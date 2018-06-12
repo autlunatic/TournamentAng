@@ -18,7 +18,10 @@ class SimpleInputFields {
   styleUrls: ['./input-result.component.css']
 })
 export class InputResultComponent implements OnInit, AfterViewInit {
+  @Input() ResultID = 0;
+  @ViewChild('competitor1Points') input1: ElementRef;
   errHTML = '';
+  getResultInfosFailed = false;
   simpleInputFields: SimpleInputFields = {
     IDInfo: '',
     RoundInfo: '',
@@ -27,9 +30,7 @@ export class InputResultComponent implements OnInit, AfterViewInit {
     Competitor1Points: 0,
     Competitor2Points: 0
   };
-  @Input() ResultID = 0;
   result: ResultInfo;
-  @ViewChild('competitor1Points') input1: ElementRef;
 
   constructor(
     private tournamentService: TournamentService,
@@ -39,17 +40,24 @@ export class InputResultComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.tournamentService.getResultInfo(+this.actRoute.snapshot.params['ID']).then((res: ResultInfo) => {
-      if (res) {
-        this.simpleInputFields.Competitor1Name = res.Comp1Name;
-        this.simpleInputFields.Competitor1Points = res.Pairing1Pts;
-        this.simpleInputFields.Competitor2Name = res.Comp2Name;
-        this.simpleInputFields.Competitor2Points = res.Pairing2Pts;
-        this.simpleInputFields.IDInfo = res.PairingID.toString();
-        this.simpleInputFields.RoundInfo = res.PairingInfo;
-      }
-      this.result = res;
-    });
+    this.tournamentService
+      .getResultInfo(+this.actRoute.snapshot.params['ID'])
+      .then((res: ResultInfo) => {
+        if (res) {
+          this.simpleInputFields.Competitor1Name = res.Comp1Name;
+          this.simpleInputFields.Competitor1Points = res.Pairing1Pts;
+          this.simpleInputFields.Competitor2Name = res.Comp2Name;
+          this.simpleInputFields.Competitor2Points = res.Pairing2Pts;
+          this.simpleInputFields.IDInfo = res.PairingID.toString();
+          this.simpleInputFields.RoundInfo = res.PairingInfo;
+        }
+        this.result = res;
+        this.getResultInfosFailed = false;
+      })
+      .catch(data => {
+        this.getResultInfosFailed = true;
+        console.log('promise failed');
+      });
   }
   onSaveInput() {
     this.result.Pairing1Pts = this.simpleInputFields.Competitor1Points;
@@ -60,9 +68,11 @@ export class InputResultComponent implements OnInit, AfterViewInit {
       .subscribe(response => this.router.navigate(['/results']), error => console.log('error', error));
   }
   ngAfterViewInit(): void {
-    this.renderer.invokeElementMethod(this.input1.nativeElement, 'focus');
-    setTimeout(() => {
-      this.renderer.invokeElementMethod(this.input1.nativeElement, 'select');
-    }, 100);
+    if (!this.input1) {
+      this.renderer.invokeElementMethod(this.input1.nativeElement, 'focus');
+      setTimeout(() => {
+        this.renderer.invokeElementMethod(this.input1.nativeElement, 'select');
+      }, 100);
+    }
   }
 }

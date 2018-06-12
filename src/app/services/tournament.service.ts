@@ -538,12 +538,22 @@ export class TournamentService {
   }
 
   getResultInfo(filterID: number): Promise<ResultInfo> {
-    return new Promise<ResultInfo>(resolve => {
+    return new Promise<ResultInfo>((resolve, reject) => {
       this.getResultInfos('').subscribe((resInfosArray: ResultInfos[]) => {
+        let resolved = false;
+        console.log(filterID);
+        console.log(resInfosArray);
         resInfosArray.forEach(resInfo => {
-          resolve(resInfo.ResultInfos.find(element => element.PairingID === filterID));
-          //     // resInfo.ResultInfos = resInfo.ResultInfos.find(element => element.PairingID === filterID);
+          const res: ResultInfo = resInfo.ResultInfos.find(element => element.PairingID === filterID);
+          if (res) {
+            resolve(res);
+            resolved = true;
+          }
         });
+        console.log(resolved);
+        if (!resolved) {
+          reject(null);
+        }
       });
     });
   }

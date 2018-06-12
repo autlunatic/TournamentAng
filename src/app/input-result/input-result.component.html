@@ -1,8 +1,8 @@
 <h1 class="MainHead">Ergebnisse eintragen</h1>
 <div class="container mainContentContainer">
-  <form method="POST">
+  <form *ngIf="!getResultInfosFailed" method="POST">
     <div class="form-group">
-      <h2 *ngIf="simpleInputFields.IDInfo">Spielnummer: {{simpleInputFields.IDInfo}}</h2>
+      <h2 *ngIf="simpleInputFields.IDInfo && simpleInputFields.IDInfo >=0">Spielnummer: {{simpleInputFields.IDInfo}}</h2>
       <h3>Runde: {{simpleInputFields.RoundInfo}}</h3>
       <label for="competitorPoints1">{{simpleInputFields.Competitor1Name}}</label>
       <input #competitor1Points type="number" class="form-control" id="competitor1Points" name="competitor1Points" [(ngModel)]="simpleInputFields.Competitor1Points"
@@ -19,3 +19,4 @@
     </div>
   </form>
 </div>
+<div *ngIf="getResultInfosFailed" class="alert alert-danger">Spiel nicht gefunden</div>
