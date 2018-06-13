@@ -25,7 +25,7 @@ export class GroupInfo {
 
 export class Competitor {
   ID: number;
-  name: string;
+  Name: string;
 }
 
 export class ResultInfos {

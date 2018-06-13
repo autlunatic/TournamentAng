@@ -12,29 +12,39 @@ export class InputCompetitorsComponent implements OnInit {
 
   @ViewChild('competitorName') inputBox: ElementRef;
   inputName = '';
-  competitors: Competitor[];
+  competitors: string[];
 
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit() {
     this.tournamentService.getCompetitors().subscribe(data => {
-      this.competitors = data;
+      this.competitors = [];
+      data.forEach(element => {
+        this.competitors.push(element.Name);
+      });
+      console.log(data);
     });
   }
 
   onAddTeam() {
     const upperNames = this.competitors.map(function(value) {
-      return value.name.toUpperCase().trim();
+      return value.toUpperCase().trim();
     });
     if (upperNames.includes(this.inputName.toUpperCase().trim())) {
       this.ErrHTML = 'Teamname ist bereits vergeben';
       return;
     }
 
+    this.competitors.push(this.inputName);
     this.ErrHTML = '';
-    this.tournamentService.addCompetitor(this.inputName);
+    // this.tournamentService.addCompetitor(this.inputName);
 
     this.inputName = '';
     this.inputBox.nativeElement.focus();
+  }
+  onSaveCompetitors() {
+    this.tournamentService
+      .saveNewCompetitors(this.competitors)
+      .subscribe(response => console.log('save OK'), error => console.log('error', error));
   }
 }

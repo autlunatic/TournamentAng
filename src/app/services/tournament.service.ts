@@ -15,7 +15,7 @@ import { componentFactoryName } from '@angular/compiler';
 
 @Injectable()
 export class TournamentService {
-  competitors: Competitor[] = [{ ID: 1, name: 'benni' }, { ID: 2, name: 'dani' }, { ID: 3, name: 'Zoé' }];
+  // competitors: Competitor[] = [{ ID: 1, Name: 'benni' }, { ID: 2, name: 'dani' }, { ID: 3, name: 'Zoé' }];
 
   tournament = {
     ID: 0,
@@ -463,17 +463,8 @@ export class TournamentService {
 
   constructor(private http: HttpClient) {}
 
-  addCompetitor(comp: string) {
-    const c: Competitor = { ID: this.getNextCompetitorID(), name: comp };
-    this.competitors.push(c);
-  }
-
-  getNextCompetitorID(): number {
-    let max = 0;
-    this.competitors.forEach(element => {
-      max = Math.max(max, element.ID);
-    });
-    return max++;
+  saveNewCompetitors(comp: string[]) {
+    return this.http.post<string>('http://localhost:5050/saveCompetitors', comp).pipe(catchError(this.handleError));
   }
 
   getCompetitors(): Observable<Competitor[]> {

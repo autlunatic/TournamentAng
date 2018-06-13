@@ -68,11 +68,13 @@ export class InputResultComponent implements OnInit, AfterViewInit {
       .subscribe(response => this.router.navigate(['/results']), error => console.log('error', error));
   }
   ngAfterViewInit(): void {
-    if (!this.input1) {
+    if (this.input1) {
       this.renderer.invokeElementMethod(this.input1.nativeElement, 'focus');
       setTimeout(() => {
-        this.renderer.invokeElementMethod(this.input1.nativeElement, 'select');
-      }, 100);
+        if (this.input1) {
+          this.renderer.invokeElementMethod(this.input1.nativeElement, 'select');
+        }
+      }, 200);
     }
   }
 }
