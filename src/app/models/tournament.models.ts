@@ -1,3 +1,5 @@
+import { Time } from '@angular/common';
+
 export class PairingInfo {
   FormattedTime: string;
   Court: string;
@@ -45,4 +47,13 @@ export class ResultInfo {
   Group1Pts: number;
   Group2Pts: number;
   Done: boolean;
+}
+
+export class TournamentDetails {
+  NumberOfParallelGames: number;
+  MinutesPerGame: number;
+  MinutesAvailForGroupsPhase: number;
+  FinalistCount: number;
+  TournamentStartTime: Time;
+  FinalsStartTime: Time;
 }

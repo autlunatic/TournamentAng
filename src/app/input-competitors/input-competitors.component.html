@@ -5,7 +5,7 @@
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
       <input type="text" class="form-control form-control-lg " autofocus id="competitorName" #competitorName name="competitorName"
-        placeholder="Teamname" [(ngModel)]="inputName">
+        placeholder="Teamname" [(ngModel)]="inputName" required>
     </div>
   </div>
   <div class="form-group row">
@@ -32,21 +32,17 @@
 </form>
 
 
-
 <h1 class="MainHead">Liste der Teams</h1>
 
 <div class="container mainContentContainer ">
   <div class="row ">
     <table class="table table-striped data-table ">
-
       <tr *ngFor="let competitor of competitors">
         <td width="90%" class="Name ">
           <a class="list-group-item-action" routerLink="/competitor/{{competitor}}">{{competitor}}</a>
         </td>
-        <td width="10%" class="deleteIcon ">
-          <a href="#" class="list-group-item-action fas fa-minus-circle"></a>
-
-
+        <td width="10%" class="deleteIcon" style="cursor:pointer" (click)="onRemoveCompetitor( competitor)">
+          <a (click)="onRemoveCompetitor( competitor)" style="cursor:pointer" class="list-group-item-action fas fa-minus-circle"></a>
         </td>
       </tr>
     </table>
