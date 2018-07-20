@@ -2,6 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { Competitor } from '../models/tournament.models';
 
+class CompetitorInfo {
+  Name: string;
+  DrawNumber: string;
+}
+
 @Component({
   selector: 'app-input-competitors',
   templateUrl: './input-competitors.component.html',
@@ -12,7 +17,7 @@ export class InputCompetitorsComponent implements OnInit {
 
   @ViewChild('competitorName') inputBox: ElementRef;
   inputName = '';
-  competitors: string[];
+  competitors: CompetitorInfo[];
 
   constructor(private tournamentService: TournamentService) {}
 
@@ -20,15 +25,19 @@ export class InputCompetitorsComponent implements OnInit {
     this.tournamentService.getCompetitors().subscribe(data => {
       this.competitors = [];
       data.forEach(element => {
-        this.competitors.push(element.Name);
+        const info = { Name: element.Name, DrawNumber: element.DrawNumber };
+        this.competitors.push(info);
       });
+      console.log(this.competitors);
+      this.competitors.sort((a, b) => parseInt(a.DrawNumber, 10) - parseInt(b.DrawNumber, 10));
       console.log(data);
+      console.log(this.competitors);
     });
   }
 
   onAddTeam() {
     const upperNames = this.competitors.map(function(value) {
-      return value.toUpperCase().trim();
+      return value.Name.toUpperCase().trim();
     });
 
     if (this.inputName === '') {
@@ -40,7 +49,7 @@ export class InputCompetitorsComponent implements OnInit {
       return;
     }
 
-    this.competitors.push(this.inputName);
+    this.competitors.push({ Name: this.inputName, DrawNumber: '0' });
     this.ErrHTML = '';
     // this.tournamentService.addCompetitor(this.inputName);
 
@@ -49,10 +58,10 @@ export class InputCompetitorsComponent implements OnInit {
   }
   onSaveCompetitors() {
     this.tournamentService
-      .saveNewCompetitors(this.competitors)
+      .saveNewCompetitors(this.competitors.map(comp => comp.Name))
       .subscribe(response => console.log('save OK'), error => console.log('error', error));
   }
   onRemoveCompetitor(competitor: string) {
-    this.competitors = this.competitors.filter(compName => compName !== competitor);
+    this.competitors = this.competitors.filter(comp => comp.Name !== competitor);
   }
 }

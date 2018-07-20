@@ -13,34 +13,36 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { componentFactoryName } from '@angular/compiler';
+import { resolve } from 'url';
 
 class Adminfunction {
   Function: string;
   Params: string[];
 }
+const url = 'http://localhost:8080/api';
 
 @Injectable()
 export class TournamentService {
   // competitors: Competitor[] = [{ ID: 1, Name: 'benni' }, { ID: 2, name: 'dani' }, { ID: 3, name: 'Zoé' }];
-
+  adminPassword = '';
   filterCompName: string;
   pairingSections: PairingSection[] = [];
 
   constructor(private http: HttpClient) {}
 
   saveNewCompetitors(comp: string[]) {
-    return this.http.post<string>('http://localhost:5050/saveCompetitors', comp).pipe(catchError(this.handleError));
+    return this.http.post<string>(url + '/saveCompetitors', comp).pipe(catchError(this.handleError));
   }
 
   getCompetitors(): Observable<Competitor[]> {
-    return this.http.get<Competitor[]>('http://localhost:5050/competitors');
+    return this.http.get<Competitor[]>(url + '/competitors');
   }
 
   getGroups(): Observable<GroupInfo[]> {
-    return this.http.get<GroupInfo[]>('http://localhost:5050/groups');
+    return this.http.get<GroupInfo[]>(url + '/groups');
   }
   getDetails(): Observable<TournamentDetails> {
-    return this.http.get<TournamentDetails>('http://localhost:5050/getDetails');
+    return this.http.get<TournamentDetails>(url + '/getDetails');
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -76,29 +78,47 @@ export class TournamentService {
       responseType: 'text'
     });
     return this.http
-      .post<ResultInfo>('http://localhost:5050/saveResults', result, { headers: header })
+      .post<ResultInfo>(url + '/saveResults', result, { headers: header })
       .pipe(catchError(this.handleError));
   }
 
   deleteFinalRound(): any {
     const af: Adminfunction = { Function: 'deleteFinalRound', Params: [] };
-    return this.http.post<Adminfunction>('http://localhost:5050/adminFunction', af).pipe(catchError(this.handleError));
+    return this.http.post<Adminfunction>(url + '/adminFunction', af).pipe(catchError(this.handleError));
   }
   buildTournament(): any {
     const af: Adminfunction = { Function: 'buildTournament', Params: [] };
-    return this.http.post<Adminfunction>('http://localhost:5050/adminFunction', af).pipe(catchError(this.handleError));
+    return this.http.post<Adminfunction>(url + '/adminFunction', af).pipe(catchError(this.handleError));
   }
   calcFinals(): any {
     const af: Adminfunction = { Function: 'calcFinals', Params: [] };
-    return this.http.post<Adminfunction>('http://localhost:5050/adminFunction', af).pipe(catchError(this.handleError));
+    return this.http.post<Adminfunction>(url + '/adminFunction', af).pipe(catchError(this.handleError));
   }
-  saveDetails(): any {}
+  loadFromDB(): any {
+    const af: Adminfunction = { Function: 'loadFromDB', Params: [] };
+    return this.http.post<Adminfunction>(url + '/adminFunction', af).pipe(catchError(this.handleError));
+  }
+  saveToDB(): any {
+    const af: Adminfunction = { Function: 'saveToDB', Params: [] };
+    return this.http.post<Adminfunction>(url + '/adminFunction', af).pipe(catchError(this.handleError));
+  }
+
+  calcRandomDraw(): any {
+    const af: Adminfunction = { Function: 'calcRandomDraw', Params: [] };
+    return this.http.post<Adminfunction>(url + '/adminFunction', af).pipe(catchError(this.handleError));
+  }
+
+  saveDetails(details: TournamentDetails): any {
+    console.log(details);
+    return this.http.post<TournamentDetails>(url + '/saveDetails', details).pipe(catchError(this.handleError));
+  }
+
   getPairingSections() {
-    return this.http.get<PairingSection[]>('http://localhost:5050/gamePlan');
+    return this.http.get<PairingSection[]>(url + '/gamePlan');
   }
 
   getResultInfo(filterID: number): Promise<ResultInfo> {
-    return new Promise<ResultInfo>((resolve, reject) => {
+    return new Promise<ResultInfo>((resolv, reject) => {
       this.getResultInfos('').subscribe((resInfosArray: ResultInfos[]) => {
         let resolved = false;
         console.log(filterID);
@@ -106,7 +126,7 @@ export class TournamentService {
         resInfosArray.forEach(resInfo => {
           const res: ResultInfo = resInfo.ResultInfos.find(element => element.PairingID === filterID);
           if (res) {
-            resolve(res);
+            resolv(res);
             resolved = true;
           }
         });
@@ -119,7 +139,7 @@ export class TournamentService {
   }
 
   getResultInfos(filter: string): Observable<ResultInfos[]> {
-    return this.http.get<ResultInfos[]>('http://localhost:5050/results').pipe(
+    return this.http.get<ResultInfos[]>(url + '/results').pipe(
       map((resp: ResultInfos[]) => {
         resp.forEach(element => {
           const res = element.ResultInfos.filter(
@@ -134,5 +154,14 @@ export class TournamentService {
         return resp;
       })
     );
+  }
+
+  isAdmin(): Promise<boolean> {
+    return new Promise<boolean>(resolv => {
+      this.getDetails().subscribe(data => {
+        console.log(data.AdminPassword, this.adminPassword);
+        resolv(data.AdminPassword === this.adminPassword);
+      });
+    });
   }
 }

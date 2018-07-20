@@ -37,12 +37,15 @@
 <div class="container mainContentContainer ">
   <div class="row ">
     <table class="table table-striped data-table ">
-      <tr *ngFor="let competitor of competitors">
-        <td width="90%" class="Name ">
-          <a class="list-group-item-action" routerLink="/competitor/{{competitor}}">{{competitor}}</a>
+      <tr *ngFor="let competitor of competitors ">
+        <td width="70%" class="Name ">
+          <a class="list-group-item-action" routerLink="/competitor/{{competitor.Name}}">{{competitor.Name}}</a>
         </td>
-        <td width="10%" class="deleteIcon" style="cursor:pointer" (click)="onRemoveCompetitor( competitor)">
-          <a (click)="onRemoveCompetitor( competitor)" style="cursor:pointer" class="list-group-item-action fas fa-minus-circle"></a>
+        <td width="20%" class="DrawNumber ">
+          <a class="list-group-item-action" routerLink="/competitor/{{competitor.Name}}">{{competitor.DrawNumber}}</a>
+        </td>
+        <td width="10%" class="deleteIcon" style="cursor:pointer" (click)="onRemoveCompetitor( competitor.Name)">
+          <a (click)="onRemoveCompetitor( competitor.Name)" style="cursor:pointer" class="list-group-item-action fas fa-minus-circle"></a>
         </td>
       </tr>
     </table>

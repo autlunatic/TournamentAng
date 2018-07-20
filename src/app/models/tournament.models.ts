@@ -28,6 +28,7 @@ export class GroupInfo {
 export class Competitor {
   ID: number;
   Name: string;
+  DrawNumber: string;
 }
 
 export class ResultInfos {
@@ -54,6 +55,8 @@ export class TournamentDetails {
   MinutesPerGame: number;
   MinutesAvailForGroupsPhase: number;
   FinalistCount: number;
-  TournamentStartTime: Time;
-  FinalsStartTime: Time;
+  TournamentStartTime: Date;
+  FinalsStartTime: Date;
+  AdminPassword: string;
+  RefereePassword: string;
 }
