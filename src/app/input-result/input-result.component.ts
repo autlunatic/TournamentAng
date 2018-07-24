@@ -31,6 +31,8 @@ export class InputResultComponent implements OnInit, AfterViewInit {
     Competitor2Points: 0
   };
   result: ResultInfo;
+  isReferee = false;
+  refereePW = '';
 
   constructor(
     private tournamentService: TournamentService,
@@ -58,6 +60,7 @@ export class InputResultComponent implements OnInit, AfterViewInit {
         this.getResultInfosFailed = true;
         console.log('promise failed');
       });
+    this.tournamentService.isReferee().then(value => (this.isReferee = value));
   }
   onSaveInput() {
     this.result.Pairing1Pts = this.simpleInputFields.Competitor1Points;
@@ -66,6 +69,9 @@ export class InputResultComponent implements OnInit, AfterViewInit {
     this.tournamentService
       .saveResult(this.result)
       .subscribe(response => this.router.navigate(['/results']), error => console.log('error', error));
+  }
+  onCancelInput() {
+    this.router.navigate(['/results']);
   }
   ngAfterViewInit(): void {
     if (this.input1) {
@@ -76,5 +82,9 @@ export class InputResultComponent implements OnInit, AfterViewInit {
         }
       }, 200);
     }
+  }
+  onSetRefereePW() {
+    this.tournamentService.refereePassword = this.refereePW;
+    this.tournamentService.isReferee().then(value => (this.isReferee = value));
   }
 }

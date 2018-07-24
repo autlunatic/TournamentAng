@@ -15,8 +15,10 @@
             </tr>
 
             <tr *ngFor="let result of resultInfo.ResultInfos">
-              <td class="Time ">
-                <a routerLink="/inputResults/{{result.PairingID}} ">{{result.PairingInfo}}</a>
+              <td class="Time" routerLink="/inputResults/{{result.PairingID}} ">
+                <!-- <a *ngIf="isReferee" routerLink="/inputResults/{{result.PairingID}} ">{{result.PairingInfo}}</a> -->
+                <!-- <span *ngIf="true || !isReferee">{{result.PairingInfo}}</span> -->
+                <span>{{result.PairingInfo}}</span>
               </td>
               <td class="Court ">{{result.Comp1Name}}</td>
               <td class="Round ">{{result.Comp2Name}}</td>

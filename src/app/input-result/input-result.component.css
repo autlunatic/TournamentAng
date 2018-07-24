@@ -1,4 +1,27 @@
 .btnBottom {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
+.form-group {
+  margin: 0 auto;
+}
+
+h2 {
+  margin-top: 10px;
+}
+label {
+  margin-top: 10px;
+}
+
+.inputPW {
+  width: 100%;
+}
+
+.btnBottom {
+  margin: 5px;
+  margin-left: 0;
+}
+
+.refPW {
+  margin-bottom: 5px;
+}

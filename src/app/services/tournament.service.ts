@@ -19,12 +19,14 @@ class Adminfunction {
   Function: string;
   Params: string[];
 }
+// const url = '/api';
 const url = 'http://localhost:8080/api';
 
 @Injectable()
 export class TournamentService {
   // competitors: Competitor[] = [{ ID: 1, Name: 'benni' }, { ID: 2, name: 'dani' }, { ID: 3, name: 'Zoé' }];
   adminPassword = '';
+  refereePassword = '';
   filterCompName: string;
   pairingSections: PairingSection[] = [];
 
@@ -159,8 +161,14 @@ export class TournamentService {
   isAdmin(): Promise<boolean> {
     return new Promise<boolean>(resolv => {
       this.getDetails().subscribe(data => {
-        console.log(data.AdminPassword, this.adminPassword);
         resolv(data.AdminPassword === this.adminPassword);
+      });
+    });
+  }
+  isReferee(): Promise<boolean> {
+    return new Promise<boolean>(resolv => {
+      this.getDetails().subscribe(data => {
+        resolv(data.RefereePassword === this.refereePassword);
       });
     });
   }

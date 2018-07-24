@@ -6,8 +6,8 @@
       <label for="AdminPW" class="col-sm-6 col-form-label">
         <h4>Passwort</h4>
       </label>
-      <input type="password" class="form-control" id="AdminPW" name="AdminPW" [(ngModel)]="adminPW">
-      <input (click)="onSetAdminPW()" type="submit" class="btn" name="btnAdminPW" value="OK">
+      <input type="password" class="form-control inputPW" id="AdminPW" name="AdminPW" [(ngModel)]="adminPW">
+      <input (click)="onSetAdminPW()" type="submit" class="btn inputPwBtn" name="btnAdminPW" value="OK">
     </div>
   </div>
   <div *ngIf="details && isAdmin" class="row justify-content-md-center">
@@ -73,7 +73,7 @@
       <div *ngIf="Error">
         <br/>
         <div class="alert alert-danger">
-          <strong>asdf{{Error}}</strong>
+          <strong>{{Error}}</strong>
         </div>
 
       </div>

@@ -18,6 +18,8 @@ import { GroupComponent } from './groups/group.component';
 import { GameplansComponent } from './gameplan/gameplans.component';
 import { InputResultComponent } from './input-result/input-result.component';
 
+import { SelectAllDirective } from './directives/select-all.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,8 @@ import { InputResultComponent } from './input-result/input-result.component';
     CompetitorPageComponent,
     GroupComponent,
     GameplansComponent,
-    InputResultComponent
+    InputResultComponent,
+    SelectAllDirective
   ],
   imports: [BrowserModule, FormsModule, RoutingModule, HttpClientModule],
   providers: [BrowserModule, HttpClientModule, FormsModule, RoutingModule, TournamentService],

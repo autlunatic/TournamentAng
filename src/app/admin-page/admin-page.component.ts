@@ -76,7 +76,6 @@ export class AdminPageComponent implements OnInit {
   }
   onSetAdminPW() {
     this.tournamenService.adminPassword = this.adminPW;
-    console.log(this.tournamenService.adminPassword, this.adminPW);
     this.tournamenService.isAdmin().then(value => (this.isAdmin = value));
   }
 }
