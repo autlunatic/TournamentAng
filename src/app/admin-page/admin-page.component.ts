@@ -17,7 +17,6 @@ export class AdminPageComponent implements OnInit {
   private finStartHour: number;
   private startMin: number;
   private finStartMin: number;
-  private tournamentStartTime;
 
   constructor(private tournamenService: TournamentService, private router: Router) {}
 
@@ -32,7 +31,6 @@ export class AdminPageComponent implements OnInit {
       data.FinalsStartTime = new Date(data.FinalsStartTime);
       data.TournamentStartTime = new Date(data.TournamentStartTime);
       this.details = data;
-      console.log('asdf', this.tournamentStartTime);
       console.log(data.FinalsStartTime);
       this.finStartHour = this.details.FinalsStartTime.getHours();
       this.finStartMin = this.details.FinalsStartTime.getMinutes();
@@ -41,8 +39,6 @@ export class AdminPageComponent implements OnInit {
     });
   }
   onSave() {
-    console.log(this.tournamentStartTime);
-
     this.details.TournamentStartTime.setHours(+this.startHour);
     this.details.TournamentStartTime.setMinutes(+this.startMin);
 

@@ -22,6 +22,10 @@ export class InputCompetitorsComponent implements OnInit {
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit() {
+    this.refreshCompetitors();
+  }
+
+  refreshCompetitors() {
     this.tournamentService.getCompetitors().subscribe(data => {
       this.competitors = [];
       data.forEach(element => {
@@ -63,5 +67,15 @@ export class InputCompetitorsComponent implements OnInit {
   }
   onRemoveCompetitor(competitor: string) {
     this.competitors = this.competitors.filter(comp => comp.Name !== competitor);
+  }
+  onSetDraw(comp: Competitor) {
+    console.log(comp);
+    this.tournamentService.saveNewDrawNumber(comp).subscribe(
+      response => {
+        console.log('save OK');
+        this.refreshCompetitors();
+      },
+      error => console.log('error', error)
+    );
   }
 }

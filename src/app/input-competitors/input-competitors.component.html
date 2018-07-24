@@ -38,13 +38,18 @@
   <div class="row ">
     <table class="table table-striped data-table ">
       <tr *ngFor="let competitor of competitors ">
-        <td width="70%" class="Name ">
+        <td width="65%" class="Name ">
           <a class="list-group-item-action" routerLink="/competitor/{{competitor.Name}}">{{competitor.Name}}</a>
         </td>
-        <td width="20%" class="DrawNumber ">
-          <a class="list-group-item-action" routerLink="/competitor/{{competitor.Name}}">{{competitor.DrawNumber}}</a>
+        <td width="30%" class="DrawNumber ">
+          <form class="form-inline" name="asdf">
+            <div class="form-group">
+              <input type="text" class="form-control inputDraw" name="draw_{{competitor.Name}}" [(ngModel)]="competitor.DrawNumber">
+              <button class="form-control" (click)="onSetDraw(competitor)">OK</button>
+            </div>
+          </form>
         </td>
-        <td width="10%" class="deleteIcon" style="cursor:pointer" (click)="onRemoveCompetitor( competitor.Name)">
+        <td width="5%" class="deleteIcon" style="cursor:pointer" (click)="onRemoveCompetitor( competitor.Name)">
           <a (click)="onRemoveCompetitor( competitor.Name)" style="cursor:pointer" class="list-group-item-action fas fa-minus-circle"></a>
         </td>
       </tr>
