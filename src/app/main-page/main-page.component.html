@@ -26,3 +26,7 @@
 <div *ngFor="let section of pairingSections">
   <app-gameplan *ngIf="section.Pairings && (section.Pairings.length) > 0" [pairingSection]="section"></app-gameplan>
 </div>
+
+<div *ngIf="pairingSections.length === 0">
+  <h3 class="MainHead">Derzeit werden keine Spiele gespielt.</h3>
+</div>

@@ -44,7 +44,7 @@ nav {
   border-radius: 5px;
 }
 
-h1.MainHead {
+.MainHead {
   text-align: center;
   height: 50px;
   font-family: arial;
