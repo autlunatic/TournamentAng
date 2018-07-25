@@ -17,6 +17,7 @@ export class AdminPageComponent implements OnInit {
   private finStartHour: number;
   private startMin: number;
   private finStartMin: number;
+  private minsToAdd: number;
 
   constructor(private tournamenService: TournamentService, private router: Router) {}
 
@@ -73,5 +74,8 @@ export class AdminPageComponent implements OnInit {
   onSetAdminPW() {
     this.tournamenService.adminPassword = this.adminPW;
     this.tournamenService.isAdmin().then(value => (this.isAdmin = value));
+  }
+  onSaveMinsToAdd() {
+    this.tournamenService.addMins(this.minsToAdd).subscribe();
   }
 }

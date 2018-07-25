@@ -7,7 +7,7 @@ export class SelectAllDirective {
   isFocused = false;
   constructor(private el: ElementRef) {}
 
-  @HostListener('click')
+  @HostListener('focus')
   onMouseEnter() {
     if (!this.isFocused) {
       this.el.nativeElement.select();

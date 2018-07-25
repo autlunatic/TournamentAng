@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="FinalistCount" class="col-sm-6 col-form-label">
+        <label for="startHour" class="col-sm-6 col-form-label">
           <h4>Startzeit</h4>
         </label>
         <div class="col-sm-3 form-group col-form-label">
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="FinalistCount" class="col-sm-6 col-form-label">
+        <label for="finStartHour" class="col-sm-6 col-form-label">
           <h4>Startzeit Finale</h4>
         </label>
         <div class="col-sm-3">
@@ -70,12 +70,23 @@
         </div>
         <div class="col-sm-1"></div>
       </div>
+
+      <div class="form-group row">
+        <label for="minsToAdd" class="col-sm-6 col-form-label">
+          <h4>Minuten hinzufügen</h4>
+        </label>
+        <div class="col-sm-3">
+          <input type="number" name="minsToAdd" [(ngModel)]="minsToAdd">
+          <button type="button" (click)="onSaveMinsToAdd()">OK</button>
+        </div>
+        <div class="col-sm-1"></div>
+      </div>
+
       <div *ngIf="Error">
         <br/>
         <div class="alert alert-danger">
           <strong>{{Error}}</strong>
         </div>
-
       </div>
 
       <div class="form-group row">

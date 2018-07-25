@@ -126,6 +126,10 @@ export class TournamentService {
   getPairingSections() {
     return this.http.get<PairingSection[]>(this.url + '/gamePlan');
   }
+  getActualPairingSections() {
+    console.log('getActual');
+    return this.http.get<PairingSection[]>(this.url + '/actualPairings');
+  }
 
   getResultInfo(filterID: number): Promise<ResultInfo> {
     return new Promise<ResultInfo>((resolv, reject) => {
@@ -181,5 +185,10 @@ export class TournamentService {
         resolv(data === 'OK');
       });
     });
+  }
+  addMins(mins: Number) {
+    console.log('addmins');
+    const af: Adminfunction = { Function: 'addMinutes', Params: [mins.toString()] };
+    return this.http.post<Adminfunction>(this.url + '/adminFunction', af).pipe(catchError(this.handleError));
   }
 }

@@ -10,8 +10,8 @@
               <th class="Time ">Spiel</th>
               <th class="Court ">Team 1</th>
               <th class="Round ">Team 2</th>
-              <th class="C1 ">Spiel Punkte</th>
-              <th class="C2 ">Gruppen Punkte</th>
+              <th class="C1 "> Punkte</th>
+              <!-- <th class="C2 ">Gruppen Punkte</th> -->
             </tr>
 
             <tr *ngFor="let result of resultInfo.ResultInfos">
@@ -23,11 +23,11 @@
               <td class="Court ">{{result.Comp1Name}}</td>
               <td class="Round ">{{result.Comp2Name}}</td>
               <td class="C1 ">
-                <span *ngIf="result.Done " Done> {{result.Pairing1Pts}}:{{result.Pairing2Pts}}</span>
+                <span *ngIf="result.Done " Done>{{result.Group1Pts}}:{{result.Group2Pts}} ({{result.Pairing1Pts}}:{{result.Pairing2Pts}})</span>
               </td>
-              <td class="C2 ">
+              <!-- <td class="C2 ">
                 <span *ngIf="result.Done " Done> {{result.Group1Pts}}:{{result.Group2Pts}}</span>
-              </td>
+              </td> -->
             </tr>
           </table>
         </div>
