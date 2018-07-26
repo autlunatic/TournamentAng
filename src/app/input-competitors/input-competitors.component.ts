@@ -32,10 +32,7 @@ export class InputCompetitorsComponent implements OnInit {
         const info = { Name: element.Name, DrawNumber: element.DrawNumber };
         this.competitors.push(info);
       });
-      console.log(this.competitors);
       this.competitors.sort((a, b) => parseInt(a.DrawNumber, 10) - parseInt(b.DrawNumber, 10));
-      console.log(data);
-      console.log(this.competitors);
     });
   }
 
@@ -69,7 +66,6 @@ export class InputCompetitorsComponent implements OnInit {
     this.competitors = this.competitors.filter(comp => comp.Name !== competitor);
   }
   onSetDraw(comp: Competitor) {
-    console.log(comp);
     this.tournamentService.saveNewDrawNumber(comp).subscribe(
       response => {
         console.log('save OK');

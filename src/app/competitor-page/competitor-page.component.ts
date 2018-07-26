@@ -26,7 +26,6 @@ export class CompetitorPageComponent implements OnInit {
         // this.section =
         this.section = { Description: 'Spielplan', Pairings: [] };
         data.forEach(element => {
-          console.log(element);
           if (element.Pairings) {
             element.Pairings.forEach(pairing => {
               if (pairing.Comp1Name === this.filterCompetitor || pairing.Comp2Name === this.filterCompetitor) {

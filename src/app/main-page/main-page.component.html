@@ -23,9 +23,8 @@
 </div>
 
 <h1 class="MainHead">aktuelle Spiele</h1>
-<div *ngFor="let section of pairingSections">
-  <app-gameplan *ngIf="section.Pairings && (section.Pairings.length) > 0" [pairingSection]="section"></app-gameplan>
-</div>
+
+<app-results *ngIf="displayPairings" [resultInfos]="resInfos" [isForMainPage]="true"></app-results>
 
 <div *ngIf="!displayPairings">
   <h3 class="MainHead">Derzeit werden keine Spiele gespielt</h3>

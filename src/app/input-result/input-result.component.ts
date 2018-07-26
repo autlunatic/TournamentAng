@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { ResultInfo } from '../models/tournament.models';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 class SimpleInputFields {
   IDInfo: string;
@@ -37,8 +38,8 @@ export class InputResultComponent implements OnInit, AfterViewInit {
   constructor(
     private tournamentService: TournamentService,
     private actRoute: ActivatedRoute,
-    private router: Router,
-    private renderer: Renderer
+    private renderer: Renderer,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -68,10 +69,10 @@ export class InputResultComponent implements OnInit, AfterViewInit {
 
     this.tournamentService
       .saveResult(this.result)
-      .subscribe(response => this.router.navigate(['/results']), error => console.log('error', error));
+      .subscribe(response => this.location.back(), error => console.log('error', error));
   }
   onCancelInput() {
-    this.router.navigate(['/results']);
+    this.location.back();
   }
   ngAfterViewInit(): void {
     if (this.input1) {

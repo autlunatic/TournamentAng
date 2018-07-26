@@ -10,13 +10,17 @@ import { ResultInfo, ResultInfos } from '../models/tournament.models';
 export class ResultsComponent implements OnInit, OnChanges {
   @Input() resultInfos: ResultInfos[] = [];
   @Input() isForCompetitor: boolean;
+  @Input() isForMainPage: boolean;
 
   constructor(private tournamentService: TournamentService) {}
 
   ngOnInit() {
+    console.log('init results', this.resultInfos);
+    // console.log('init results', this.resultInfos[0].ResultInfos);
     if (!this.isForCompetitor && (!this.resultInfos || this.resultInfos.length === 0)) {
       this.tournamentService.getResultInfos('').subscribe((data: ResultInfos[]) => {
         this.resultInfos = data;
+        console.log('forcompresults', data);
       });
     }
   }

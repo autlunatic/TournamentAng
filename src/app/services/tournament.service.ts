@@ -126,17 +126,14 @@ export class TournamentService {
   getPairingSections() {
     return this.http.get<PairingSection[]>(this.url + '/gamePlan');
   }
-  getActualPairingSections() {
-    console.log('getActual');
-    return this.http.get<PairingSection[]>(this.url + '/actualPairings');
+  getActualResults() {
+    return this.http.get<ResultInfos[]>(this.url + '/actualResults');
   }
 
   getResultInfo(filterID: number): Promise<ResultInfo> {
     return new Promise<ResultInfo>((resolv, reject) => {
       this.getResultInfos('').subscribe((resInfosArray: ResultInfos[]) => {
         let resolved = false;
-        console.log(filterID);
-        console.log(resInfosArray);
         resInfosArray.forEach(resInfo => {
           const res: ResultInfo = resInfo.ResultInfos.find(element => element.PairingID === filterID);
           if (res) {
@@ -144,7 +141,6 @@ export class TournamentService {
             resolved = true;
           }
         });
-        console.log(resolved);
         if (!resolved) {
           reject(null);
         }

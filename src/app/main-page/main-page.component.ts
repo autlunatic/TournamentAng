@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
-import { PairingSection } from '../models/tournament.models';
+import { PairingSection, ResultInfos } from '../models/tournament.models';
 import { TournamentService } from '../services/tournament.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { TournamentService } from '../services/tournament.service';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-  pairingSections: PairingSection[] = [];
+  resInfos: ResultInfos[];
   displayPairings = false;
   hours: string;
   mins: string;
@@ -24,41 +24,21 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.mins = (m < 10 ? '0' : '') + m;
     const s = new Date().getSeconds();
     this.secs = (s < 10 ? '0' : '') + s;
-    if (this.secs === '01') {
+    if (this.secs.length === 2 && (this.secs.charAt(1) === '0' || this.secs.charAt(1) === '5')) {
       this.refreshPairings();
     }
   }
 
   refreshPairings() {
-    this.tournamentService.getActualPairingSections().subscribe((sections: PairingSection[]) => {
-      this.pairingSections = sections;
-      this.displayPairings = this.pairingSections.length === 2 && this.pairingSections[0].Pairings != null;
-
-      console.log(this.pairingSections);
+    this.tournamentService.getActualResults().subscribe((resInfos: ResultInfos[]) => {
+      this.resInfos = resInfos;
+      this.displayPairings = this.resInfos.length >= 1 && this.resInfos[0].ResultInfos.length >= 1;
     });
   }
   ngOnInit() {
     this.onrefreshClock();
     this.sub = this.refreshClock.subscribe(() => this.onrefreshClock());
     this.refreshPairings();
-    // setInterval(this.refreshClock, 1000);
-    // setInterval(function() {
-    //   const h = new Date().getHours();
-    //   console.log(h);
-    //   console.log(h < 10 ? '0' : '');
-    //   this.hours = (h < 10 ? '0' : '') + String(h);
-    // }, 1000);
-    // setInterval(function() {
-    //   const m = new Date().getMinutes();
-    //   this.mins = (m < 10 ? '0' : '') + m;
-    // }, 1000);
-    // setInterval(function() {
-    //   const s = new Date().getSeconds();
-    //   console.log(s);
-    //   this.secs = String(s);
-    //   console.log(s < 10 ? '0' : '');
-    //   // this.secs = (s < 10 ? '0' : '') + s;
-    // }, 1000);
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

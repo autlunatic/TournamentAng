@@ -39,6 +39,7 @@ export class ResultInfos {
 }
 
 export class ResultInfo {
+  Court: number;
   PairingID: number;
   PairingInfo: string;
   // Comp1ID    :number

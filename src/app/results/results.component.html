@@ -1,13 +1,13 @@
 <div *ngFor="let resultInfo of resultInfos">
-  <div *ngIf="resultInfo.ResultInfos.length> 0">
+  <div *ngIf=" resultInfo.ResultInfos && resultInfo.ResultInfos.length> 0">
     <h1 class=" MainHead ">{{resultInfo.Description}}</h1>
     <div class="container mainContentContainer ">
       <div class="row ">
         <div class="table-responsive ">
           <table class="table table-striped data-table ">
-
             <tr>
               <th class="Time ">Spiel</th>
+              <th class="Round ">Feld </th>
               <th class="Court ">Team 1</th>
               <th class="Round ">Team 2</th>
               <th class="C1 "> Punkte</th>
@@ -20,6 +20,7 @@
                 <!-- <span *ngIf="true || !isReferee">{{result.PairingInfo}}</span> -->
                 <span>{{result.PairingInfo}}</span>
               </td>
+              <td class="Round ">{{result.Court}}</td>
               <td class="Court ">{{result.Comp1Name}}</td>
               <td class="Round ">{{result.Comp2Name}}</td>
               <td class="C1 ">

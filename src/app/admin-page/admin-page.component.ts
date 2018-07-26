@@ -28,11 +28,9 @@ export class AdminPageComponent implements OnInit {
 
   refreshDetails() {
     this.tournamenService.getDetails().subscribe(data => {
-      console.log('refresh', data);
       data.FinalsStartTime = new Date(data.FinalsStartTime);
       data.TournamentStartTime = new Date(data.TournamentStartTime);
       this.details = data;
-      console.log(data.FinalsStartTime);
       this.finStartHour = this.details.FinalsStartTime.getHours();
       this.finStartMin = this.details.FinalsStartTime.getMinutes();
       this.startHour = this.details.TournamentStartTime.getHours();
@@ -46,7 +44,6 @@ export class AdminPageComponent implements OnInit {
     this.details.FinalsStartTime.setHours(+this.finStartHour);
     this.details.FinalsStartTime.setMinutes(+this.finStartMin);
 
-    console.log(this.details);
     this.tournamenService.saveDetails(this.details).subscribe(data => this.refreshDetails());
   }
   onCalcFinals() {
