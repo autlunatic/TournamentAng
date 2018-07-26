@@ -16,7 +16,9 @@ export class PairingSection {
 class CompetitorInfos {
   Name: string;
   GamePoints: number;
-  TeamPoints: number;
+  GamePointsNegative: number;
+  GroupPoints: number;
+  GroupPointsNegative: number;
 }
 
 // GroupInfo ist for representing a group in HTMl

@@ -4,14 +4,20 @@
     <div class="table-responsive">
       <table class="table table-striped">
         <th width="80%">Name </th>
-        <th> Spielpunkte</th>
-        <th> Gruppenpunkte</th>
+        <th class="d-none d-sm-table-cell">Punkte Spiel</th>
+        <th>Diff.</th>
+        <th>
+          <b>Pkt.</b>
+        </th>
         <tr *ngFor="let team of grp.CInfo">
           <td class="clickableGroup">
             <a class="clickableGroup" routerLink="/competitor/{{team.Name}}">{{team.Name}}</a>
           </td>
-          <td>{{team.GamePoints}}</td>
-          <td>{{team.TeamPoints}}</td>
+          <td class="d-none d-sm-table-cell">{{team.GamePoints}}</td>
+          <td>{{team.GamePoints - team.GamePointsNegative}}</td>
+          <td>
+            <b>{{team.GroupPoints}}</b>
+          </td>
         </tr>
       </table>
     </div>

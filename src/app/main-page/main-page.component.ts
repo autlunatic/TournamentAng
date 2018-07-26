@@ -10,6 +10,7 @@ import { TournamentService } from '../services/tournament.service';
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   pairingSections: PairingSection[] = [];
+  displayPairings = false;
   hours: string;
   mins: string;
   secs: string;
@@ -31,6 +32,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   refreshPairings() {
     this.tournamentService.getActualPairingSections().subscribe((sections: PairingSection[]) => {
       this.pairingSections = sections;
+      this.displayPairings = this.pairingSections.length === 2 && this.pairingSections[0].Pairings != null;
+
+      console.log(this.pairingSections);
     });
   }
   ngOnInit() {
