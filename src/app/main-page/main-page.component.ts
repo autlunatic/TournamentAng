@@ -32,7 +32,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   refreshPairings() {
     this.tournamentService.getActualResults().subscribe((resInfos: ResultInfos[]) => {
       this.resInfos = resInfos;
-      this.displayPairings = this.resInfos.length >= 1 && this.resInfos[0].ResultInfos.length >= 1;
+      this.displayPairings = this.resInfos != null && this.resInfos[0].ResultInfos != null;
     });
   }
   ngOnInit() {
