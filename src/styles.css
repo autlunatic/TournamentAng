@@ -43,25 +43,14 @@ nav {
   font-weight: bold;
   border-radius: 5px;
 }
-.SmallHead {
-  text-align: center;
-  height: 30px;
-  font-family: arial;
-  font-weight: bold;
-  color: floralwhite;
-  text-transform: uppercase;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
 .MainHead {
   text-align: center;
-  height: 50px;
   font-family: arial;
   font-weight: bold;
   color: floralwhite;
   text-transform: uppercase;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 h2 {

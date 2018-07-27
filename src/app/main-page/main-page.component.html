@@ -2,9 +2,9 @@
 
 <div class="container">
   <div class="row justify-content-md-center">
-    <div class="col col-lg-4">
+    <div class="col col-lg-6">
       <div class="mainContentContainer">
-        <div class="card-body text-center">
+        <div class="text-center clock">
           <p class="card-title ">
             <a>
               <span>{{hours}}</span>
@@ -22,10 +22,10 @@
   </div>
 </div>
 
-<h1 class="MainHead">aktuelle Spiele</h1>
+<h1 *ngIf="displayPairings" class="MainHead">aktuelle Spiele</h1>
 
 <app-results *ngIf="displayPairings" [resultInfos]="resInfos" [isForMainPage]="true"></app-results>
 
 <div *ngIf="!displayPairings">
-  <h4 class="SmallHead">Derzeit werden keine Spiele gespielt</h4>
+  <h4 class="MainHead">Derzeit werden keine Spiele gespielt</h4>
 </div>
