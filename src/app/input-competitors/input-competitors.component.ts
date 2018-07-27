@@ -24,7 +24,12 @@ export class InputCompetitorsComponent implements OnInit {
   ngOnInit() {
     this.refreshCompetitors();
   }
-
+  getCompetitorCount(): string {
+    if (this.competitors == null) {
+      return '';
+    }
+    return this.competitors.length.toString();
+  }
   refreshCompetitors() {
     this.tournamentService.getCompetitors().subscribe(data => {
       this.competitors = [];

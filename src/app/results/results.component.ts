@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { ResultInfo, ResultInfos } from '../models/tournament.models';
+import { format } from 'util';
 
 @Component({
   selector: 'app-results',
@@ -26,5 +27,21 @@ export class ResultsComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     // this.results = this.tournamentService.getResultInfos(this.filterCompetitor);
+  }
+  getPoints(result) {
+    const str = [];
+    if (!this.isForMainPage) {
+      str.push(result.Group1Pts.toString());
+      str.push(':');
+      str.push(result.Group2Pts.toString());
+      str.push(' (');
+    }
+    str.push(result.Pairing1Pts.toString());
+    str.push(':');
+    str.push(result.Pairing2Pts.toString());
+    if (!this.isForMainPage) {
+      str.push(')');
+    }
+    return str.join('');
   }
 }

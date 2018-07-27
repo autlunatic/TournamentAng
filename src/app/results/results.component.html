@@ -24,7 +24,7 @@
               <td class="C1">{{result.Comp1Name}}</td>
               <td class="C2">{{result.Comp2Name}}</td>
               <td class="Points">
-                <span *ngIf="result.Done " Done>{{result.Group1Pts}}:{{result.Group2Pts}} ({{result.Pairing1Pts}}:{{result.Pairing2Pts}})</span>
+                <span *ngIf="result.Done " Done>{{getPoints(result)}}</span>
               </td>
               <!-- <td class="C2 ">
                 <span *ngIf="result.Done " Done> {{result.Group1Pts}}:{{result.Group2Pts}}</span>
