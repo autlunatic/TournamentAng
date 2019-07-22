@@ -15,7 +15,7 @@ class CompetitorInfo {
 export class InputCompetitorsComponent implements OnInit {
   ErrHTML = '';
 
-  @ViewChild('competitorName') inputBox: ElementRef;
+  @ViewChild('competitorName', { static: true }) inputBox: ElementRef;
   inputName = '';
   competitors: CompetitorInfo[];
 

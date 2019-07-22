@@ -20,7 +20,7 @@ class SimpleInputFields {
 })
 export class InputResultComponent implements OnInit, AfterViewInit {
   @Input() ResultID = 0;
-  @ViewChild('competitor1Points') input1: ElementRef;
+  @ViewChild('competitor1Points', { static: false }) input1: ElementRef;
   errHTML = '';
   getResultInfosFailed = false;
   simpleInputFields: SimpleInputFields = {

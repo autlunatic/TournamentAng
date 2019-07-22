@@ -24,7 +24,7 @@ export class TournamentService {
   // competitors: Competitor[] = [{ ID: 1, Name: 'benni' }, { ID: 2, name: 'dani' }, { ID: 3, name: 'Zoé' }];
   adminPassword = '';
   url = '/api';
-  demo = false;
+  demo = true;
   refereePassword = '';
   filterCompName: string;
   pairingSections: PairingSection[] = [];
