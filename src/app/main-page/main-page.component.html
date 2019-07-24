@@ -14,7 +14,7 @@
       <div class="mainContentContainer">
         <div class="text-center clock">
           <p class="card-title ">
-            <img src="../../assets/4KidsLogo.png" class="logo" alt="">
+            <img src="../../assets/4KidsLogo.png" class="logo" alt="" />
           </p>
         </div>
       </div>
@@ -28,13 +28,15 @@
         <div class="text-center clock">
           <p class="card-title ">
             <a>
-              <span>{{hours}}</span>
-            </a> :
+              <span>{{ hours }}</span>
+            </a>
+            :
             <a>
-              <span>{{mins}}</span>
-            </a> :
+              <span>{{ mins }}</span>
+            </a>
+            :
             <a>
-              <span>{{secs}}</span>
+              <span>{{ secs }}</span>
             </a>
           </p>
         </div>
@@ -42,8 +44,6 @@
     </div>
   </div>
 </div>
-
-<h1 *ngIf="displayPairings" class="MainHead">aktuelle Spiele</h1>
 
 <app-results *ngIf="displayPairings" [resultInfos]="resInfos" [isForMainPage]="true"></app-results>
 

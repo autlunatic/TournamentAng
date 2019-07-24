@@ -1,6 +1,6 @@
 <div *ngFor="let resultInfo of resultInfos">
-  <div *ngIf=" resultInfo.ResultInfos && resultInfo.ResultInfos.length> 0">
-    <h1 *ngIf="!isForMainPage" class="MainHead ">{{resultInfo.Description}}</h1>
+  <div *ngIf="resultInfo.ResultInfos && resultInfo.ResultInfos.length > 0">
+    <h1 class="MainHead ">{{ resultInfo.Description }}</h1>
     <div class="container mainContentContainer ">
       <div class="row ">
         <div class="table-responsive ">
@@ -10,21 +10,21 @@
               <th class="Court">Bahn</th>
               <th class="C1">Team 1</th>
               <th class="C2">Team 2</th>
-              <th class="Points"> Punkte</th>
+              <th class="Points">Punkte</th>
               <!-- <th class="C2 ">Gruppen Punkte</th> -->
             </tr>
 
             <tr *ngFor="let result of resultInfo.ResultInfos">
-              <td class="pID d-none d-sm-table-cell" routerLink="/inputResults/{{result.PairingID}} ">
+              <td class="pID d-none d-sm-table-cell" routerLink="/inputResults/{{ result.PairingID }} ">
                 <!-- <a *ngIf="isReferee" routerLink="/inputResults/{{result.PairingID}} ">{{result.PairingInfo}}</a> -->
                 <!-- <span *ngIf="true || !isReferee">{{result.PairingInfo}}</span> -->
-                <span>{{result.PairingInfo}}</span>
+                <span>{{ result.PairingInfo }}</span>
               </td>
-              <td class="Court" routerLink="/inputResults/{{result.PairingID}} ">{{result.Court}}</td>
-              <td class="C1">{{result.Comp1Name}}</td>
-              <td class="C2">{{result.Comp2Name}}</td>
+              <td class="Court" routerLink="/inputResults/{{ result.PairingID }} ">{{ result.Court }}</td>
+              <td class="C1">{{ result.Comp1Name }}</td>
+              <td class="C2">{{ result.Comp2Name }}</td>
               <td class="Points">
-                <span *ngIf="result.Done " Done>{{getPoints(result)}}</span>
+                <span *ngIf="result.Done" Done>{{ getPoints(result) }}</span>
               </td>
               <!-- <td class="C2 ">
                 <span *ngIf="result.Done " Done> {{result.Group1Pts}}:{{result.Group2Pts}}</span>

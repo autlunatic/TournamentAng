@@ -1,16 +1,26 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit, Renderer, Renderer2 } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { ResultInfo } from '../models/tournament.models';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 class SimpleInputFields {
-  IDInfo: string;
-  RoundInfo: string;
-  Competitor1Name: string;
-  Competitor2Name: string;
-  Competitor1Points: number;
-  Competitor2Points: number;
+  constructor(
+    public IDInfo: string,
+    public RoundInfo: string,
+    public Competitor1Name: string,
+    public Competitor2Name: string,
+    public Competitor1Points: number,
+    public Competitor2Points: number
+  ) {}
+
+  IDInfoToNumber(): number {
+    const parsed = +this.IDInfo;
+    if (isNaN(parsed)) {
+      return 0;
+    }
+    return parsed;
+  }
 }
 
 @Component({
@@ -23,14 +33,7 @@ export class InputResultComponent implements OnInit, AfterViewInit {
   @ViewChild('competitor1Points', { static: false }) input1: ElementRef;
   errHTML = '';
   getResultInfosFailed = false;
-  simpleInputFields: SimpleInputFields = {
-    IDInfo: '',
-    RoundInfo: '',
-    Competitor1Name: '',
-    Competitor2Name: '',
-    Competitor1Points: 0,
-    Competitor2Points: 0
-  };
+  simpleInputFields: SimpleInputFields = new SimpleInputFields('', '', '', '', 0, 0);
   result: ResultInfo;
   isReferee = false;
   refereePW = '';
